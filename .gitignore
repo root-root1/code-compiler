@@ -1,0 +1,7 @@
+demo/out
+demo/test.asm
+demo/test.o
+cmake-build-debug/
+.vscode/    
+.idea/
+build/
