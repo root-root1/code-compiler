@@ -16,7 +16,7 @@ public:
       : m_tokens(std::move(tokens)) {}
 
   std::optional<NodeExpr> parse_expr() {
-    if (peak().has_value() && peak().value().type == TokenType::int_lit) {
+    if (peek().has_value() && peek().value().type == TokenType::int_lit) {
       return NodeExpr{.int_lit = consume()};
     } else {
       return {};
@@ -26,8 +26,8 @@ public:
   std::optional<NodeExit> parse() {
     std::optional<NodeExit> node_exit;
 
-    while (peak().has_value()) {
-      if (peak().value().type == TokenType::exit) {
+    while (peek().has_value()) {
+      if (peek().value().type == TokenType::exit) {
         consume();
         if (auto node_expr = parse_expr()) {
           node_exit = NodeExit{.expr = node_expr.value()};
@@ -36,13 +36,13 @@ public:
           exit(EXIT_FAILURE);
         }
 
-        if (peak().has_value() && peak().value().type == TokenType::semi) {
+        if (peek().has_value() && peek().value().type == TokenType::semi) {
           consume();
         } else {
           std::cerr << "Invalid expression semi" << std::endl;
           exit(EXIT_FAILURE);
         }
-      } else if (peak().value().type == TokenType::_return) {
+      } else if (peek().value().type == TokenType::_return) {
         consume();
         if (auto node_parse = parse_expr()) {
         }
@@ -53,7 +53,7 @@ public:
   }
 
 private:
-  [[nodiscard]] inline std::optional<Token> peak(int ahead = 1) const {
+  [[nodiscard]] inline std::optional<Token> peek(int ahead = 1) const {
     if (m_index + ahead > m_tokens.size()) {
       return {};
     } else {
