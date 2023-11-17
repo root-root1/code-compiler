@@ -1,1 +1,2 @@
-exit 6;
+let x = 45;
+let y = x;
