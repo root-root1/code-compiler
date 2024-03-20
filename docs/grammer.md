@@ -12,6 +12,7 @@ $$
 \begin{cases}
  \text{int\_lit}\\
  \text{ident}
-\end{cases}
+\end{cases} \\
+[\text{BinExp}]
 \end{align}
 $$
